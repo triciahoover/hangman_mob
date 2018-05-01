@@ -1,15 +1,12 @@
 Welcome to Hangman!!!
 <br>
 <br>
-Your word is: <%= correct_answers %>
+Your word is: <%= correct_word %>
 <br>
 Please enter a letter:
 	<form method="post" action="letter_choice">
     <input type="text" name="letter">
-    <input type="hidden" name="secret_word">
-    <input type="hidden" name="correct_answers">
-    <input type="hidden" name="turns">
-	<br>
+  	<br>
 	<br>
 <input type="submit">
 </form>
