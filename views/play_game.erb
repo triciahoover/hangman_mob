@@ -1,21 +1,16 @@
 <% turns = turns.to_i %>
 
-<% guessed_letters = [] %>
-<% secret_word = secret_word.to_s %>
-<% correct_answers = correct_answers.to_s %>
-<% secret_word_array = secret_word.split('') %>
-<% correct_answers_array = correct_answers.split('') %>
-
-Your word is: <%= correct_answers_array %>
+Your word is: <%= correct_word %>
 <br>
 <br>
 <%	loop do
-		secret_word_array.each_with_index do |value, key|
-			if letter == value
-				correct_answers_array[key] = letter
+		secret_word.each_char do |char| 
+			i = secret_word.index(char)
+			if letter == char
+				correct_word[i] = letter
 			end
-		end	
-		if secret_word_array.include?(letter) %>
+		end
+			if secret_word.include?(letter) %>
 			You have guess the correct letter
 			<br>
 		<% else %>
@@ -26,17 +21,17 @@ Your word is: <%= correct_answers_array %>
 			You have <%= turns %> left
 			<br>
 		<% end %>
+		<% guessed_letters = guessed_letters.insert(0, letter) %>
 
-		<% guessed_letters.push(letter) %>
 		<br>
-		You have used the following letters: <%= guessed_letters %>
+		You have guessed the following letters: <%= guessed_letters %>
 		<br>
 			<% if game_over?(turns) %>
 			<br>
 				Sorry, you have lost the game.  The word was <%= secret_word %>
 				<br>
 				<% break %>
-			<% elsif win?(secret_word_array, correct_answers_array) %>
+			<% elsif win?(secret_word, correct_word) %>
 			<br>
 				You have won the game!!
 				<br>
@@ -47,10 +42,14 @@ Your word is: <%= correct_answers_array %>
 
 	<form method="post" action="letter_choice">
     <input type="text" name="letter">
+    <input type="hidden" name="secret_word" value="<%=secret_word%>">
+    <input type="hidden" name="correct_word" value="<%= correct_word%>">
+    <input type="hidden" name="turns" value="<%= turns%>">
+    <input type="hidden" name="guessed_letters" value="<%= guessed_letters%>">
 	<br>
 	<br>
 	<input type="submit">
 	</form>
-
+	<% break %>
 			<% end %>
 <% end %>

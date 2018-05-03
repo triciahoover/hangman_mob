@@ -6,6 +6,10 @@ Your word is: <%= correct_word %>
 Please enter a letter:
 	<form method="post" action="letter_choice">
     <input type="text" name="letter">
+    <input type="hidden" name="secret_word" value="<%=secret_word%>">
+    <input type="hidden" name="correct_word" value="<%= correct_word%>">
+    <input type="hidden" name="turns" value="<%= turns%>">
+    <input type="hidden" name="guessed_letters" value="<%= guessed_letters%>">
   	<br>
 	<br>
 <input type="submit">

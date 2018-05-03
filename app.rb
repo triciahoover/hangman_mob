@@ -1,35 +1,40 @@
 require 'sinatra'
 require_relative 'hangman.rb'
-enable :sessions
 
 
 get '/' do
-	word = ["jacuzzi", "zombies", "awkward", "shallow","species", "buffalo", "cobwebs", "jackpot","jukebox", "keyhole", "puzzled","zigzags", "zodiacs", "buzzard", "alfredo", "antique", "bagpipe", "balloon","bandana", "cabbage", "caboose", 
-	"calvary", "dessert", "dolphin", "earmuff", "earring", "emerald", "indulge",
-	"jasmine", "orchids"]
+	word = ["jacuzzi", "zombies"]
 	secret_word = word.sample
+	puts secret_word
 	correct_word = "-" * secret_word.length
-	secret_word = session[:secret_word]
-	correct_answers = session[:correct_word]
-	turn = "8"
-	turns = session[:turn]  
-	erb :home, :locals => {:correct_word => correct_word, :secret_word => secret_word, :correct_answers => correct_answers, :turns => turns}
+	puts correct_word
+	turns = "8"
+	puts turns
+	guessed_letters = " "
+	puts guessed_letters
+	puts guessed_letters.class 
+	erb :home, :locals => {:secret_word => secret_word, :correct_word => correct_word, :turns => turns, :guessed_letters => guessed_letters}
 end
 
 post '/letter_choice' do
-	session[:letter] = params[:letter]
-	session[:correct_word] = params[:correct_word]
- 	session[:secret_word] = params[:secret_word]
-	session[:correct_answers] = params[:correct_answers]
-	session[:turns] = params[:turns]
-	redirect '/gameplay'
+	letter = params[:letter]
+	puts letter
+	secret_word = params[:secret_word]
+	puts secret_word
+	correct_word = params[:correct_word]
+	puts correct_word
+ 	turns = params[:turns]
+ 	puts turns
+	guessed_letters = params[:guessed_letters]
+	puts guessed_letters
+	redirect '/gameplay?letter=' + letter + '&secret_word=' + secret_word + '&correct_word=' + correct_word + '&turns=' + turns + '&guessed_letters=' + guessed_letters
 end
 	
 get '/gameplay' do
-	letter = session[:letter]
-	correct_word = session[:correct_word]
-	secret_word = session[:secret_word]
-	correct_answers = session[:correct_answers]
-	turns = session[:turns]
-	erb :play_game, :locals => {:correct_word => correct_word, :letter => letter, :secret_word => secret_word, :correct_answers => correct_answers, :turns => turns}
+	letter = params[:letter]
+	secret_word = params[:secret_word]
+	correct_word = params[:correct_word]
+ 	turns = params[:turns]
+	guessed_letters = params[:guessed_letters]
+	erb :play_game, :locals => {:letter => letter, :secret_word => secret_word, :correct_word => correct_word, :turns => turns, :guessed_letters => guessed_letters}
 end
