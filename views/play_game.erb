@@ -1,17 +1,13 @@
 <% turns = turns.to_i %>
-
-Your word is: <%= correct_word %>
-<br>
-<br>
 <%	loop do
 		secret_word.each_char do |char| 
-			i = secret_word.index(char)
 			if letter == char
+				i = secret_word.index(char)
 				correct_word[i] = letter
 			end
 		end
 			if secret_word.include?(letter) %>
-			You have guess the correct letter
+			You have guessed a correct letter
 			<br>
 		<% else %>
 			Sorry, you have not guessed the correct letter
@@ -21,8 +17,11 @@ Your word is: <%= correct_word %>
 			You have <%= turns %> left
 			<br>
 		<% end %>
-		<% guessed_letters = guessed_letters.insert(0, letter) %>
 
+		<br>
+		Your word is: <%= correct_word %>
+		<% guessed_letters = guessed_letters.insert(0, letter + ', ') %>
+		<br>
 		<br>
 		You have guessed the following letters: <%= guessed_letters %>
 		<br>
@@ -52,4 +51,30 @@ Your word is: <%= correct_word %>
 	</form>
 	<% break %>
 			<% end %>
+<% end %>
+<% case turns %>
+<% when 10 %>
+	 <img src='/img/hangman10.png' height="180" width="200">
+<% when 9 %>
+	 <img src='/img/hangman9.png' height="180" width="200">
+<% when 8 %>
+	 <img src='/img/hangman8.png' height="180" width="200">
+<% when 7 %>
+	 <img src='/img/hangman7.png' height="180" width="200">
+<% when 6 %>
+	 <img src='/img/hangman6.png' height="180" width="200">
+<% when 5 %>
+	 <img src='/img/hangman5.png' height="180" width="200">
+<% when 4 %>
+	 <img src='/img/hangman4.png' height="180" width="200">
+<% when 3 %>
+	 <img src='img/hangman3.png' height="180" width="200">
+<% when 2 %>
+	 <img src='/img/hangman2.png' height="180" width="200">
+<% when 1 %>
+	 <img src='/img/hangman1.png' height="180" width="200">
+<% when 0 %>
+	 <img src='/img/hangman0.png' height="180" width="200">
+<% else %>
+	this is not working!
 <% end %>
